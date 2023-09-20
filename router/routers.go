@@ -37,11 +37,7 @@ func routers(router *gin.Engine) {
 		v1.DELETE("/time/:id", teams.DeleteTeamHandler)
 
 		// Obtem um time pelo id
-		v1.GET("/team/:id", func(context *gin.Context) {
-			context.JSON(200, gin.H{
-				"total": "10",
-			})
-		})
+		v1.GET("/team/:id", teams.GetTeamHandler)
 
 		// Obtem os jogadores cadastrados
 		v1.GET("/payers", func(context *gin.Context) {
