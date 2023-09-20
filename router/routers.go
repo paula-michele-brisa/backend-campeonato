@@ -2,6 +2,7 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/paula-michele-brisa/backend-campeonato/handler/players"
 	"github.com/paula-michele-brisa/backend-campeonato/handler/teams"
 	"github.com/paula-michele-brisa/backend-campeonato/handler/user"
 )
@@ -40,32 +41,16 @@ func routers(router *gin.Engine) {
 		v1.GET("/team/:id", teams.GetTeamHandler)
 
 		// Obtem os jogadores cadastrados
-		v1.GET("/payers", func(context *gin.Context) {
-			context.JSON(200, gin.H{
-				"total": "10",
-			})
-		})
+		v1.GET("/payers", players.GetPlayersHandler)
 
 		// Cadastra um novo jogador
-		v1.POST("/player", func(context *gin.Context) {
-			context.JSON(201, gin.H{
-				"message": "Player Cadastrado",
-			})
-		})
+		v1.POST("/player", players.RegisterPlayerHandler)
 
 		// Editar/Atualizar jogador
-		v1.PUT("/player/:id", func(context *gin.Context) {
-			context.JSON(400, gin.H{
-				"message": "Jogador atualizado",
-			})
-		})
+		v1.PUT("/player/:id", players.UpdatePlayerHandler)
 
-		// Deleta um time
-		v1.DELETE("/player/:id", func(context *gin.Context) {
-			context.JSON(204, gin.H{
-				"message": "Jogador excluído",
-			})
-		})
+		// Deleta um jogador
+		v1.DELETE("/player/:id", players.DeletePlayerHandler)
 
 		// Obtem os jogos do campeonato
 		v1.GET("/games", func(context *gin.Context) {
