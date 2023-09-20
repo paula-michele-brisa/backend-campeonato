@@ -2,6 +2,7 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/paula-michele-brisa/backend-campeonato/handler/teams"
 	"github.com/paula-michele-brisa/backend-campeonato/handler/user"
 )
 
@@ -21,39 +22,19 @@ func routers(router *gin.Engine) {
 		v1.POST("/login", user.LoginUserHandler)
 
 		// Obter o total de times cadastrados
-		v1.GET("/team_count", func(context *gin.Context) {
-			context.JSON(200, gin.H{
-				"total": "10",
-			})
-		})
+		v1.GET("/team_count", teams.GetTotalRegisteredTeamsHandler)
 
 		// Listar os times cadastrados
-		v1.GET("/teams", func(context *gin.Context) {
-			context.JSON(200, gin.H{
-				"time": "GPS futebol clube",
-			})
-		})
+		v1.GET("/teams", teams.GetTeamsHandler)
 
 		// Cadastra um novo time
-		v1.POST("/team", func(context *gin.Context) {
-			context.JSON(201, gin.H{
-				"message": "Time Cadastrado",
-			})
-		})
+		v1.POST("/team", teams.RegisterTeamHandler)
 
 		// Editar/Atualizar time
-		v1.PUT("/team/:id", func(context *gin.Context) {
-			context.JSON(400, gin.H{
-				"message": "Time atualizado",
-			})
-		})
+		v1.PUT("/team/:id", teams.UpdateTeamHandler)
 
 		// Deleta um time
-		v1.DELETE("/time/:id", func(context *gin.Context) {
-			context.JSON(204, gin.H{
-				"message": "Time excluído",
-			})
-		})
+		v1.DELETE("/time/:id", teams.DeleteTeamHandler)
 
 		// Obtem um time pelo id
 		v1.GET("/team/:id", func(context *gin.Context) {
