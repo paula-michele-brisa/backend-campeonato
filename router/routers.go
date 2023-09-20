@@ -2,6 +2,7 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/paula-michele-brisa/backend-campeonato/handler/championship"
 	"github.com/paula-michele-brisa/backend-campeonato/handler/players"
 	"github.com/paula-michele-brisa/backend-campeonato/handler/teams"
 	"github.com/paula-michele-brisa/backend-campeonato/handler/user"
@@ -53,18 +54,10 @@ func routers(router *gin.Engine) {
 		v1.DELETE("/player/:id", players.DeletePlayerHandler)
 
 		// Obtem os jogos do campeonato
-		v1.GET("/games", func(context *gin.Context) {
-			context.JSON(200, gin.H{
-				"total": "GPS x 4 andar",
-			})
-		})
+		v1.GET("/games", championship.GetGamesHandler)
 
 		// Gera os jogos
-		v1.POST("/championship", func(context *gin.Context) {
-			context.JSON(201, gin.H{
-				"message": "Campeonato gerado com sucesso!",
-			})
-		})
+		v1.POST("/championship", championship.GenerateChampionship)
 
 	}
 
