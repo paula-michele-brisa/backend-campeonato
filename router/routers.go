@@ -99,6 +99,20 @@ func routers(router *gin.Engine) {
 			})
 		})
 
+		// Obtem os jogos do campeonato
+		v1.GET("/games", func(context *gin.Context) {
+			context.JSON(200, gin.H{
+				"total": "GPS x 4 andar",
+			})
+		})
+
+		// Gera os jogos
+		v1.POST("/championship", func(context *gin.Context) {
+			context.JSON(201, gin.H{
+				"message": "Campeonato gerado com sucesso!",
+			})
+		})
+
 	}
 
 }
