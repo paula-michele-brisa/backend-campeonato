@@ -60,7 +60,7 @@ func routers(router *gin.Engine) {
 		// Deleta um time
 		v1.DELETE("/time/:id", func(context *gin.Context) {
 			context.JSON(204, gin.H{
-				"message": "Usuário logado",
+				"message": "Time excluído",
 			})
 		})
 
@@ -68,6 +68,34 @@ func routers(router *gin.Engine) {
 		v1.GET("/team/:id", func(context *gin.Context) {
 			context.JSON(200, gin.H{
 				"total": "10",
+			})
+		})
+
+		// Obtem os jogadores cadastrados
+		v1.GET("/payers", func(context *gin.Context) {
+			context.JSON(200, gin.H{
+				"total": "10",
+			})
+		})
+
+		// Cadastra um novo jogador
+		v1.POST("/player", func(context *gin.Context) {
+			context.JSON(201, gin.H{
+				"message": "Player Cadastrado",
+			})
+		})
+
+		// Editar/Atualizar jogador
+		v1.PUT("/player/:id", func(context *gin.Context) {
+			context.JSON(400, gin.H{
+				"message": "Jogador atualizado",
+			})
+		})
+
+		// Deleta um time
+		v1.DELETE("/player/:id", func(context *gin.Context) {
+			context.JSON(204, gin.H{
+				"message": "Jogador excluído",
 			})
 		})
 
