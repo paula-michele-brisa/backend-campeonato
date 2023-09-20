@@ -1,6 +1,9 @@
 package router
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/paula-michele-brisa/backend-campeonato/handler/user"
+)
 
 func routers(router *gin.Engine) {
 
@@ -9,25 +12,13 @@ func routers(router *gin.Engine) {
 	v1 := router.Group(basePath)
 	{
 		// Obter usuário
-		v1.GET("/user", func(context *gin.Context) {
-			context.JSON(200, gin.H{
-				"usario": "xx1254",
-			})
-		})
+		v1.GET("/user", user.GetUserHandler)
 
 		// Registrar usuário
-		v1.POST("/user", func(context *gin.Context) {
-			context.JSON(201, gin.H{
-				"message": "Usuário cadastrado",
-			})
-		})
+		v1.POST("/user", user.RegisterUserHandler)
 
 		// Efetuar login
-		v1.POST("/login", func(context *gin.Context) {
-			context.JSON(201, gin.H{
-				"message": "Usuário logado",
-			})
-		})
+		v1.POST("/login", user.LoginUserHandler)
 
 		// Obter o total de times cadastrados
 		v1.GET("/team_count", func(context *gin.Context) {
