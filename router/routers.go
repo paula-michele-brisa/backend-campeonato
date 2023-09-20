@@ -36,7 +36,7 @@ func routers(router *gin.Engine) {
 		v1.PUT("/team/:id", teams.UpdateTeamHandler)
 
 		// Deleta um time
-		v1.DELETE("/time/:id", teams.DeleteTeamHandler)
+		v1.DELETE("/team/:id", teams.DeleteTeamHandler)
 
 		// Obtem um time pelo id
 		v1.GET("/team/:id", teams.GetTeamHandler)
