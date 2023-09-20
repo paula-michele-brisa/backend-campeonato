@@ -9,7 +9,7 @@ import (
 
 // OpenDB efetua a conexão com o banco de dados
 func OpenDB() {
-	db, err := sql.Open("postgres", "momonosuke")
+	db, err := sql.Open("postgres", "momonosuke.db")
 
 	if err != nil {
 		log.Fatal(err)
