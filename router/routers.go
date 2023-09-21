@@ -3,9 +3,10 @@ package router
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/paula-michele-brisa/backend-campeonato/handler/championship"
+	"github.com/paula-michele-brisa/backend-campeonato/handler/login"
 	"github.com/paula-michele-brisa/backend-campeonato/handler/players"
 	"github.com/paula-michele-brisa/backend-campeonato/handler/teams"
-	"github.com/paula-michele-brisa/backend-campeonato/handler/user"
+	"github.com/paula-michele-brisa/backend-campeonato/router/user"
 )
 
 func routers(router *gin.Engine) {
@@ -14,14 +15,11 @@ func routers(router *gin.Engine) {
 
 	v1 := router.Group(basePath)
 	{
-		// Obter usuário
-		v1.GET("/user", user.GetUserHandler)
 
-		// Registrar usuário
-		v1.POST("/user", user.RegisterUserHandler)
+		user.UserRouter(v1)
 
 		// Efetuar login
-		v1.POST("/login", user.LoginUserHandler)
+		v1.POST("/login", login.LoginUserHandler)
 
 		// Obter o total de times cadastrados
 		v1.GET("/team_count", teams.GetTotalRegisteredTeamsHandler)
