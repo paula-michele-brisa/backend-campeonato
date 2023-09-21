@@ -3,9 +3,9 @@ package router
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/paula-michele-brisa/backend-campeonato/handler/championship"
-	"github.com/paula-michele-brisa/backend-campeonato/handler/login"
 	"github.com/paula-michele-brisa/backend-campeonato/handler/players"
-	"github.com/paula-michele-brisa/backend-campeonato/handler/teams"
+	"github.com/paula-michele-brisa/backend-campeonato/router/login"
+	"github.com/paula-michele-brisa/backend-campeonato/router/team"
 	"github.com/paula-michele-brisa/backend-campeonato/router/user"
 )
 
@@ -15,29 +15,9 @@ func routers(router *gin.Engine) {
 
 	v1 := router.Group(basePath)
 	{
-
 		user.UserRouter(v1)
-
-		// Efetuar login
-		v1.POST("/login", login.LoginUserHandler)
-
-		// Obter o total de times cadastrados
-		v1.GET("/team_count", teams.GetTotalRegisteredTeamsHandler)
-
-		// Listar os times cadastrados
-		v1.GET("/teams", teams.GetTeamsHandler)
-
-		// Cadastra um novo time
-		v1.POST("/team", teams.RegisterTeamHandler)
-
-		// Editar/Atualizar time
-		v1.PUT("/team/:id", teams.UpdateTeamHandler)
-
-		// Deleta um time
-		v1.DELETE("/team/:id", teams.DeleteTeamHandler)
-
-		// Obtem um time pelo id
-		v1.GET("/team/:id", teams.GetTeamHandler)
+		login.LoginRouter(v1)
+		team.TeamRouter(v1)
 
 		// Obtem os jogadores cadastrados
 		v1.GET("/payers", players.GetPlayersHandler)
