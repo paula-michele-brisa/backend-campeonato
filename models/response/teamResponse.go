@@ -1,6 +1,6 @@
-package models
+package response
 
-type Team struct {
+type TeamResponse struct {
 	Name       string `json:"name"`
 	BadgePhoto string `json:"badgePhoto"`
 	City       string `json:"city"`

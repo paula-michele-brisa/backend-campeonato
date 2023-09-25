@@ -1,6 +1,6 @@
-package models
+package response
 
-type User struct {
+type UserResponse struct {
 	Name     string `json:"name"`
 	Email    string `json:"email"`
 	Password string `json:"password"`

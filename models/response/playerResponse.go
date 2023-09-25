@@ -1,6 +1,6 @@
-package models
+package response
 
-type Player struct {
+type PlayerResponse struct {
 	Name     string `json:"name"`
 	Photo    string `json:"photo"`
 	Height   int32  `json:"height"`

@@ -1,6 +1,6 @@
-package models
+package response
 
-type Games struct {
+type GamesResponse struct {
 	TimeA string `json:"timeA"`
 	TimeB string `json:"timeB"`
 }
