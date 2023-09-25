@@ -1,6 +1,9 @@
 package router
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"log"
+)
 
 // SetupRouter inicializa e configura as rotas e o servidor
 func SetupRouter() {
@@ -10,6 +13,9 @@ func SetupRouter() {
 
 	initializeRouters(v1)
 
-	router.Run()
+	if err := router.Run(); err != nil {
+		log.Fatal(err)
+
+	}
 
 }
