@@ -2,11 +2,13 @@ package router
 
 import "github.com/gin-gonic/gin"
 
-// SetupRouter inicializa o servidor
+// SetupRouter inicializa e configura as rotas e o servidor
 func SetupRouter() {
-	router := gin.Default() // Criando instancia do Gin Router e utilizando as configurações padrão
+	router := gin.Default()
 
-	routers(router)
+	v1 := router.Group("api/v1")
+
+	initializeRouters(v1)
 
 	router.Run()
 

@@ -11,9 +11,9 @@ func UserRouter(router *gin.RouterGroup) {
 	userGroup := router.Group("/user")
 
 	// Obter usuário
-	userGroup.GET("/user", handler.GetUserHandler)
+	userGroup.GET("/", handler.GetUserHandler)
 
 	// Registrar usuário
-	userGroup.POST("/user", handler.RegisterUserHandler)
+	userGroup.POST("/", handler.RegisterUserHandler)
 
 }
