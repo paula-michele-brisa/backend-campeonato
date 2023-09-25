@@ -7,7 +7,7 @@ import (
 	en2 "github.com/go-playground/locales/en"
 	ut "github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"
-	en3 "github.com/go-playground/validator/v10/translations/en"
+	en_translation "github.com/go-playground/validator/v10/translations/en"
 	"github.com/paula-michele-brisa/backend-campeonato/config/rest_err"
 )
 
@@ -21,7 +21,7 @@ func init() {
 		en := en2.New()
 		unt := ut.New(en, en)
 		transl, _ := unt.GetTranslator("en")
-		en3.RegisterDefaultTranslations(val, transl)
+		en_translation.RegisterDefaultTranslations(val, transl)
 
 	}
 }
