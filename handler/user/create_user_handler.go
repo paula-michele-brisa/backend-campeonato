@@ -12,8 +12,8 @@ var (
 	UserDomainInterface user.UserDomainInterface
 )
 
-// RegisterUserHandler é responsável por retorar os dados do usuário
-func RegisterUserHandler(context *gin.Context) {
+// CreateUserHandler é responsável por retorar os dados do usuário
+func CreateUserHandler(context *gin.Context) {
 
 	var userRequest request.UserRequest
 

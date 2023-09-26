@@ -14,6 +14,6 @@ func UserRouter(router *gin.RouterGroup) {
 	userGroup.GET("/", handler.GetUserHandler)
 
 	// Registrar usuário
-	userGroup.POST("/", handler.RegisterUserHandler)
+	userGroup.POST("/", handler.CreateUserHandler)
 
 }
