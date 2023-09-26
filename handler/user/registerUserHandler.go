@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/paula-michele-brisa/backend-campeonato/config/validation"
-	"github.com/paula-michele-brisa/backend-campeonato/models/request"
+	"github.com/paula-michele-brisa/backend-campeonato/handler/models/request"
 )
 
 // RegisterUserHandler é responsável por retorar os dados do usuário
