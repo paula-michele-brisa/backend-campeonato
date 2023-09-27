@@ -5,6 +5,7 @@ import (
 	"github.com/paula-michele-brisa/backend-campeonato/config/logger"
 	"github.com/paula-michele-brisa/backend-campeonato/config/validation"
 	"github.com/paula-michele-brisa/backend-campeonato/handler/models/request"
+	user2 "github.com/paula-michele-brisa/backend-campeonato/model/service/user"
 	"github.com/paula-michele-brisa/backend-campeonato/model/user"
 	"go.uber.org/zap"
 	"net/http"
@@ -31,7 +32,8 @@ func CreateUserHandler(context *gin.Context) {
 
 	domain := user.NewUserDomain(userRequest.Email, userRequest.Password, userRequest.Name)
 
-	if err := domain.CreateUser(); err != nil {
+	service := user2.NewUserDomainService()
+	if err := service.CreateUser(domain); err != nil {
 		context.JSON(err.Code, err)
 	}
 
