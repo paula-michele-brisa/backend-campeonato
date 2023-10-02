@@ -2,19 +2,15 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/paula-michele-brisa/backend-campeonato/router/games"
-	"github.com/paula-michele-brisa/backend-campeonato/router/login"
-	"github.com/paula-michele-brisa/backend-campeonato/router/player"
-	"github.com/paula-michele-brisa/backend-campeonato/router/team"
+	user2 "github.com/paula-michele-brisa/backend-campeonato/handler/user"
 	"github.com/paula-michele-brisa/backend-campeonato/router/user"
 )
 
-func initializeRouters(router *gin.RouterGroup) {
+// InitializeRouters inicializa as rotas
+func InitializeRouters(router *gin.Engine, userHandler user2.UserHandlerInterface) {
 
-	user.UserRouter(router)
-	login.LoginRouter(router)
-	team.TeamRouter(router)
-	player.PlayerRouter(router)
-	games.GamesRouter(router)
+	v1 := router.Group("api/v1")
+
+	user.UserRouters(v1, userHandler)
 
 }

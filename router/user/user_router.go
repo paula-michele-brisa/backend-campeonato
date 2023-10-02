@@ -2,18 +2,20 @@ package user
 
 import (
 	"github.com/gin-gonic/gin"
-	handler "github.com/paula-michele-brisa/backend-campeonato/handler/user"
+	user2 "github.com/paula-michele-brisa/backend-campeonato/handler/user"
 )
 
-// UserRouter contém as rotas referentes ao usuário
-func UserRouter(router *gin.RouterGroup) {
+// UserRouters rotas usuário
+func UserRouters(router *gin.RouterGroup, userHandler user2.UserHandlerInterface) {
 
-	userGroup := router.Group("/user")
+	routerGroup := router.Group("/user")
 
-	// Obter usuário
-	userGroup.GET("/", handler.GetUserHandler)
+	routerGroup.GET("/", userHandler.GetUserHandler)
 
-	// Registrar usuário
-	userGroup.POST("/", handler.CreateUserHandler)
+	routerGroup.POST("/", userHandler.CreateUserHandler)
+
+	routerGroup.PUT("/", userHandler.UpdateUserHandler)
+
+	routerGroup.DELETE("/", userHandler.DeleteUserHandler)
 
 }

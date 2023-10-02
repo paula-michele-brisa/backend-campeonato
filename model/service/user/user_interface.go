@@ -2,14 +2,16 @@ package user
 
 import (
 	"github.com/paula-michele-brisa/backend-campeonato/config/rest_err"
+	"github.com/paula-michele-brisa/backend-campeonato/model/repository"
 	"github.com/paula-michele-brisa/backend-campeonato/model/user"
 )
 
-func NewUserDomainService() UserDomainService {
-	return &userDomainService{}
+func NewUserDomainService(userRepository repository.UserRepository) UserDomainService {
+	return &userDomainService{userRepository}
 }
 
 type userDomainService struct {
+	userRepository repository.UserRepository
 }
 
 type UserDomainService interface {

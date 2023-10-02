@@ -2,20 +2,18 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/paula-michele-brisa/backend-campeonato/handler/user"
 	"log"
 )
 
-// SetupRouter inicializa e configura as rotas e o servidor
-func SetupRouter() {
+// SetupRouter configura o servidor
+func SetupRouter(userHandler user.UserHandlerInterface) {
 	router := gin.Default()
 
-	v1 := router.Group("api/v1")
-
-	initializeRouters(v1)
+	InitializeRouters(router, userHandler)
 
 	if err := router.Run(); err != nil {
-		log.Fatal(err)
-
+		log.Fatal("Ocorreu um erro ao iniciar o servidor.")
 	}
 
 }
