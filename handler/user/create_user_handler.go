@@ -5,8 +5,8 @@ import (
 	"github.com/paula-michele-brisa/backend-campeonato/config/logger"
 	"github.com/paula-michele-brisa/backend-campeonato/config/validation"
 	"github.com/paula-michele-brisa/backend-campeonato/handler/models/request"
-	user2 "github.com/paula-michele-brisa/backend-campeonato/model/service/user"
 	"github.com/paula-michele-brisa/backend-campeonato/model/user"
+	"github.com/paula-michele-brisa/backend-campeonato/view"
 	"go.uber.org/zap"
 	"net/http"
 )
@@ -15,11 +15,10 @@ var (
 	UserDomainInterface user.UserDomainInterface
 )
 
-// CreateUserHandler é responsável por retorar os dados do usuário
-func CreateUserHandler(context *gin.Context) {
-	logger.Info("Init CreateUser handler",
-		zap.String("journey", "createUser"))
+// CreateUserHandler cadastra o usuário
+func (userHandler *userHandlerInterface) CreateUserHandler(context *gin.Context) {
 
+	// Objeto com os atributos necessários para fazer a criação do usuário
 	var userRequest request.UserRequest
 
 	if err := context.ShouldBindJSON(&userRequest); err != nil {
@@ -32,14 +31,12 @@ func CreateUserHandler(context *gin.Context) {
 
 	domain := user.NewUserDomain(userRequest.Email, userRequest.Password, userRequest.Name)
 
-	service := user2.NewUserDomainService()
-	if err := service.CreateUser(domain); err != nil {
+	if err := userHandler.service.CreateUser(domain); err != nil {
 		context.JSON(err.Code, err)
 	}
 
 	logger.Info("User created successfully",
 		zap.String("journey", "createUser"))
 
-	context.String(http.StatusOK, "")
-
+	context.JSON(http.StatusOK, view.ConverteToDomainResponse(domain))
 }
