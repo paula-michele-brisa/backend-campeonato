@@ -1,10 +1,10 @@
 package user
 
 import (
-	"fmt"
 	"github.com/paula-michele-brisa/backend-campeonato/config/logger"
 	"github.com/paula-michele-brisa/backend-campeonato/config/rest_err"
 	"github.com/paula-michele-brisa/backend-campeonato/model/user"
+	"github.com/paula-michele-brisa/backend-campeonato/model/utils"
 	"go.uber.org/zap"
 )
 
@@ -13,8 +13,9 @@ func (user *userDomainService) CreateUser(
 ) *rest_err.RestErr {
 	logger.Info("Init CreateUser handler",
 		zap.String("journey", "createUser"))
-	userDomain.EncryptPassword()
+	utils.EncryptPassword(userDomain)
 
-	fmt.Println(userDomain.GetPassword())
+	logger.Info(userDomain.GetPassword())
+
 	return nil
 }
