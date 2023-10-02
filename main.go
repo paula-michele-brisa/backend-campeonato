@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	config.OpenDB()
+	config.NewDatabasePostgres()
 	router.SetupRouter()
 
 }

@@ -2,38 +2,32 @@ package config
 
 import (
 	"database/sql"
-	"fmt"
 	_ "github.com/lib/pq" // Importe o driver PostgreSQL
-	"log"
+	"github.com/paula-michele-brisa/backend-campeonato/config/logger"
+	"os"
 )
 
 var (
-	db *sql.DB
+	PostgresCredential = "URL_POSTGRES"
 )
 
-// OpenDB efetua a conexão com o banco de dados
-func OpenDB() {
+// NewDatabasePostgres efetua a conexão com o banco de dados
+func NewDatabasePostgres() (*sql.DB, error) {
 
-	connStr := "user=postgres dbname=postgres password=1997 sslmode=disable"
-	db, err := sql.Open("postgres", connStr)
+	url_postgress := os.Getenv(PostgresCredential)
 
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// check the connection
-	err = db.Ping()
+	db, err := sql.Open("postgres", url_postgress)
 
 	if err != nil {
-		panic(err)
+		logger.Error("Erro ao abrir a conexão com o PostgreSQL:", err)
+		return nil, err
 	}
 
 	defer db.Close()
 
-	fmt.Println("Conexão com o banco de dados PostgreSQL estabelecida com sucesso!")
-}
+	db.Ping()
 
-// Retorna o ponteiro do banco de dadoss
-func GetDB() *sql.DB {
-	return db
+	logger.Info("Banco de dados iniciado....")
+
+	return db, nil
 }
