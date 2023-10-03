@@ -10,10 +10,10 @@ import (
 func (user *userDomainService) FindUserByEmailServices(email string) (user.UserDomainInterface, *rest_err.RestErr) {
 	logger.Info("Init findUserByEmail services.",
 		zap.String("Journey", "findUserByEmail"))
-	return user.FindUserByEmailServices(email)
+	return user.userRepository.FindUserByEmail(email)
 }
 func (user *userDomainService) FindUserByIDServices(id string) (user.UserDomainInterface, *rest_err.RestErr) {
 	logger.Info("Init findUserByID services.",
 		zap.String("Journey", "findUserByID"))
-	return user.FindUserByIDServices(id)
+	return user.userRepository.FindUserByID(id)
 }

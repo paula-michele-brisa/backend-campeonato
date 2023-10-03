@@ -10,7 +10,9 @@ func UserRouters(router *gin.RouterGroup, userHandler user2.UserHandlerInterface
 
 	routerGroup := router.Group("/user")
 
-	routerGroup.GET("/", userHandler.GetUserHandler)
+	routerGroup.GET("/getUserById/:userId", userHandler.FindUserByIDHandler)
+
+	routerGroup.GET("/getUserByEmail/:userEmail", userHandler.FindUserByEmailHandler)
 
 	routerGroup.POST("/", userHandler.CreateUserHandler)
 
