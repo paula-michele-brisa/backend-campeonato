@@ -3,11 +3,9 @@ package user
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/paula-michele-brisa/backend-campeonato/config/logger"
-	"github.com/paula-michele-brisa/backend-campeonato/config/rest_err"
 	"github.com/paula-michele-brisa/backend-campeonato/view"
 	"go.uber.org/zap"
 	"net/http"
-	"net/mail"
 )
 
 // FindUserByIDHandler retorna os dados do usuário
@@ -41,12 +39,12 @@ func (userHandler *userHandlerInterface) FindUserByEmailHandler(context *gin.Con
 
 	logger.Info("Init findUserByEmail handler", zap.String("journey", "findUserByEmail"))
 
-	userEmail := context.Param("email")
+	userEmail := context.Param("userEmail")
 
-	if _, err := mail.ParseAddress(userEmail); err != nil {
-		errorMessage := rest_err.NewBadRequestError("Email is not a valid id")
-		context.JSON(errorMessage.Code, errorMessage)
-	}
+	//if _, err := mail.ParseAddress(userEmail); err != nil {
+	//	errorMessage := rest_err.NewBadRequestError("Email is not a valid email")
+	//	context.JSON(errorMessage.Code, errorMessage)
+	//}
 
 	userDomain, err := userHandler.service.FindUserByEmailServices(userEmail)
 

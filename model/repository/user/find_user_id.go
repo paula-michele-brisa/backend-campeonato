@@ -13,19 +13,15 @@ func (user *userRespository) FindUserByEmail(email string) (user.UserDomainInter
 
 	db := user.databaseConnection
 
-	query := `SELECT email FROM t_user WHERE email=?`
+	query := `SELECT id, name, email FROM t_user WHERE email=$1`
 
 	userEntity := &user2.UserEntity{}
 
-	err := db.QueryRow(query, email).Scan(&userEntity)
-
-	if userEntity == nil {
-		logger.Info("Email não cadastrado")
-	}
+	err := db.QueryRow(query, email).Scan(&userEntity.ID, &userEntity.Name, &userEntity.Email)
 
 	if err != nil {
-
 		logger.Error("Ocorreu um erro ao tentar obter usuário no banco de dados", err)
+		return nil, nil
 	}
 
 	return user3.ConvertEntityToDomain(*userEntity), nil
@@ -36,19 +32,15 @@ func (user *userRespository) FindUserByID(id string) (user.UserDomainInterface, 
 
 	db := user.databaseConnection
 
-	query := `SELECT id FROM t_user WHERE id=?`
+	query := `SELECT id, name, email FROM t_user WHERE id=$1`
 
 	userEntity := &user2.UserEntity{}
 
-	err := db.QueryRow(query, id).Scan(&userEntity)
-
-	if userEntity == nil {
-		logger.Info("Usuário não cadastrado")
-	}
+	err := db.QueryRow(query, id).Scan(&userEntity.ID, &userEntity.Name, &userEntity.Email)
 
 	if err != nil {
-
 		logger.Error("Ocorreu um erro ao tentar obter usuário no banco de dados", err)
+		return nil, nil
 	}
 
 	return user3.ConvertEntityToDomain(*userEntity), nil
