@@ -23,11 +23,9 @@ func NewDatabasePostgres() (*sql.DB, error) {
 		return nil, err
 	}
 
-	defer db.Close()
-
-	db.Ping()
-
-	logger.Info("Banco de dados iniciado....")
+	if err := db.Ping(); err != nil {
+		logger.Error("Erro na conexão com o PostgreSQL:", err)
+	}
 
 	return db, nil
 }

@@ -2,21 +2,21 @@ package user
 
 import (
 	"github.com/paula-michele-brisa/backend-campeonato/config/rest_err"
-	"github.com/paula-michele-brisa/backend-campeonato/model/repository"
+	user2 "github.com/paula-michele-brisa/backend-campeonato/model/repository/user"
 	"github.com/paula-michele-brisa/backend-campeonato/model/user"
 )
 
-func NewUserDomainService(userRepository repository.UserRepository) UserDomainService {
+func NewUserDomainService(userRepository user2.UserRepository) UserDomainService {
 	return &userDomainService{userRepository}
 }
 
 type userDomainService struct {
-	userRepository repository.UserRepository
+	userRepository user2.UserRepository
 }
 
 type UserDomainService interface {
 	UpdateUser(string, user.UserDomainInterface) *rest_err.RestErr
-	CreateUser(user.UserDomainInterface) *rest_err.RestErr
+	CreateUser(user.UserDomainInterface) (user.UserDomainInterface, *rest_err.RestErr)
 	FindUser(string) (*user.UserDomainInterface, *rest_err.RestErr)
 	DeleteUser(string) *rest_err.RestErr
 }

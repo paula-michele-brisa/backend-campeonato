@@ -3,7 +3,7 @@ package main
 import (
 	"database/sql"
 	user2 "github.com/paula-michele-brisa/backend-campeonato/handler/user"
-	repository2 "github.com/paula-michele-brisa/backend-campeonato/model/repository"
+	repository2 "github.com/paula-michele-brisa/backend-campeonato/model/repository/user"
 	"github.com/paula-michele-brisa/backend-campeonato/model/service/user"
 )
 

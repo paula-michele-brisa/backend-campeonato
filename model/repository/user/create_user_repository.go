@@ -1,4 +1,4 @@
-package repository
+package user
 
 import (
 	"github.com/paula-michele-brisa/backend-campeonato/config/logger"
