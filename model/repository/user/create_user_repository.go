@@ -3,6 +3,7 @@ package user
 import (
 	"github.com/paula-michele-brisa/backend-campeonato/config/logger"
 	"github.com/paula-michele-brisa/backend-campeonato/config/rest_err"
+	user2 "github.com/paula-michele-brisa/backend-campeonato/model/repository/convert/user"
 	"github.com/paula-michele-brisa/backend-campeonato/model/user"
 )
 
@@ -11,30 +12,15 @@ func (user *userRespository) CreateUser(userDomain user.UserDomainInterface) (us
 
 	db := user.databaseConnection
 
-	query := `INSERT INTO user(name, email, password)
-	VALUES(%s, %s, %s)`
+	value := user2.ConvertDomainToEntity(userDomain)
 
-	rows, err := db.Query(query, userDomain.GetName(), userDomain.GetEmail(), userDomain.GetPassword())
+	query := `INSERT INTO t_user(name, email, password)
+	VALUES($1, $2, $3) RETURNING id`
 
+	err := db.QueryRow(query, value.Name, value.Email, value.Password).Scan(&value.ID)
 	if err != nil {
 		logger.Error("Ocorreu um erro ao tentar cadastrar usuário no banco de dados", err)
 	}
 
-	var userID string
-
-	for rows.Next() {
-		var id string
-		err = rows.Scan(&id)
-
-		if err != nil {
-			break
-		}
-
-		userID = id
-
-	}
-
-	userDomain.SetID(userID)
-
-	return nil, nil
+	return user2.ConvertEntityToDomain(*value), nil
 }
