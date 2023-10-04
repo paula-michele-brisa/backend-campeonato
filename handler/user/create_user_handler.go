@@ -21,6 +21,8 @@ func (userHandler *userHandlerInterface) CreateUserHandler(context *gin.Context)
 	// Objeto com os atributos necessários para fazer a criação do usuário
 	var userRequest request.UserRequest
 
+	logger.Info(userRequest.Name)
+
 	if err := context.ShouldBindJSON(&userRequest); err != nil {
 		logger.Error("Erro trying to validate user info", err,
 			zap.String("journey", "createUser"))
