@@ -18,6 +18,6 @@ func UserRouters(router *gin.RouterGroup, userHandler user2.UserHandlerInterface
 
 	routerGroup.PUT("/updateUser/:userId", userHandler.UpdateUserHandler)
 
-	routerGroup.DELETE("/", userHandler.DeleteUserHandler)
+	routerGroup.DELETE("/:userId", userHandler.DeleteUserHandler)
 
 }
