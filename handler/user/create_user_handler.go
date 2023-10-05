@@ -31,6 +31,13 @@ func (userHandler *userHandlerInterface) CreateUserHandler(context *gin.Context)
 		return
 	}
 
+	registeredUser, err := userHandler.service.FindUserByEmailServices(userRequest.Email)
+
+	if registeredUser != nil {
+		context.JSON(http.StatusBadRequest, "msg: Usuário já cadastrado no sistema!")
+		return
+	}
+
 	domain := user.NewUserDomain(userRequest.Email, userRequest.Password, userRequest.Name)
 
 	domainResult, err := userHandler.service.CreateUser(domain)
