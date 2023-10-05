@@ -12,6 +12,13 @@ func (userHandler *userHandlerInterface) DeleteUserHandler(context *gin.Context)
 
 	err := userHandler.service.DeleteUser(userID)
 
+	user, err := userHandler.service.FindUserByIDServices(userID)
+
+	if user == nil {
+		context.JSON(http.StatusBadRequest, "msg: Usuário não encontrado")
+		return
+	}
+
 	if err != nil {
 		if err != nil {
 			logger.Error("Erro trying to call DeleteUserHandler services", err)
