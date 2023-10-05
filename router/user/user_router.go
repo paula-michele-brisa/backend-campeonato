@@ -14,7 +14,7 @@ func UserRouters(router *gin.RouterGroup, userHandler user2.UserHandlerInterface
 
 	routerGroup.GET("/getUserByEmail/:userEmail", userHandler.FindUserByEmailHandler)
 
-	routerGroup.POST("/", userHandler.CreateUserHandler)
+	routerGroup.POST("/createUser/", userHandler.CreateUserHandler)
 
 	routerGroup.PUT("/updateUser/:userId", userHandler.UpdateUserHandler)
 
