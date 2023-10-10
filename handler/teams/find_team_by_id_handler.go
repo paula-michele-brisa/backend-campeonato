@@ -5,7 +5,7 @@ import (
 )
 
 // GetTeamHandler obtém um time pelo id
-func GetTeamHandler(context *gin.Context) {
+func (team *teamHandlerInterface) FindTeamByIDHandler(context *gin.Context) {
 	//var res string
 	//var teams []string
 	//rows, err := db.Query("SELECT * FROM teams ")

@@ -6,24 +6,24 @@ import (
 )
 
 // TeamRouter rotas para team
-func TeamRouter(router *gin.RouterGroup) {
+func TeamRouter(router *gin.RouterGroup, team teams.TeamHandlerInterface) {
 	teamGroup := router.Group("/team")
 
 	// Obter o total de times cadastrados
-	teamGroup.GET("/team_count", teams.GetTotalRegisteredTeamsHandler)
+	teamGroup.GET("/team_count", team.FindTotalTeams)
 
 	// Listar os times cadastrados
-	teamGroup.GET("/", teams.GetTeamsHandler)
+	teamGroup.GET("/", team.FindTeams)
 
 	// Cadastra um novo time
-	teamGroup.POST("/createTeam", teams.RegisterTeamHandler)
+	teamGroup.POST("/createTeam", team.CreateTeamHandler)
 
 	// Editar/Atualizar time
-	teamGroup.PUT("/updateTeam/:id", teams.UpdateTeamHandler)
+	teamGroup.PUT("/updateTeam/:id", team.UpdateTeamHandler)
 
 	// Deleta um time
-	teamGroup.DELETE("/deleteTeam/:id", teams.DeleteTeamHandler)
+	teamGroup.DELETE("/deleteTeam/:id", team.DeleteTeamHandler)
 
 	// Obtem um time pelo id
-	teamGroup.GET("/:id", teams.GetTeamHandler)
+	teamGroup.GET("/:id", team.FindTeamByIDHandler)
 }
