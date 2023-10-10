@@ -13,17 +13,17 @@ func TeamRouter(router *gin.RouterGroup) {
 	teamGroup.GET("/team_count", teams.GetTotalRegisteredTeamsHandler)
 
 	// Listar os times cadastrados
-	teamGroup.GET("/teams", teams.GetTeamsHandler)
+	teamGroup.GET("/", teams.GetTeamsHandler)
 
 	// Cadastra um novo time
-	teamGroup.POST("/team", teams.RegisterTeamHandler)
+	teamGroup.POST("/createTeam", teams.RegisterTeamHandler)
 
 	// Editar/Atualizar time
-	teamGroup.PUT("/team/:id", teams.UpdateTeamHandler)
+	teamGroup.PUT("/updateTeam/:id", teams.UpdateTeamHandler)
 
 	// Deleta um time
-	teamGroup.DELETE("/team/:id", teams.DeleteTeamHandler)
+	teamGroup.DELETE("/deleteTeam/:id", teams.DeleteTeamHandler)
 
 	// Obtem um time pelo id
-	teamGroup.GET("/team/:id", teams.GetTeamHandler)
+	teamGroup.GET("/:id", teams.GetTeamHandler)
 }
