@@ -4,7 +4,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/paula-michele-brisa/backend-campeonato/handler/teams"
 	user2 "github.com/paula-michele-brisa/backend-campeonato/handler/user"
-	"github.com/paula-michele-brisa/backend-campeonato/router/login"
 	"github.com/paula-michele-brisa/backend-campeonato/router/team"
 	"github.com/paula-michele-brisa/backend-campeonato/router/user"
 )
@@ -14,7 +13,7 @@ func InitializeRouters(router *gin.Engine, userHandler user2.UserHandlerInterfac
 
 	v1 := router.Group("api/v1")
 
-	login.LoginRouter(v1)
+	//login.LoginRouter(v1, loginHandler)
 	user.UserRouters(v1, userHandler)
 	team.TeamRouter(v1, teamHandler)
 
