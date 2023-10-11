@@ -51,7 +51,7 @@ func (team *teamHandler) FindTotalTeams(context *gin.Context) {
 	})
 }
 
-func NewTeamHandlerInterface(teamService team.TeamDomainServiceInterface) TeamHandlerInterface {
+func TeamHandler(teamService team.TeamDomainServiceInterface) TeamHandlerInterface {
 	return &teamHandler{
 		teamService: teamService,
 	}

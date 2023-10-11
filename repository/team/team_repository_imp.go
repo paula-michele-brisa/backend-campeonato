@@ -1,6 +1,7 @@
 package team
 
 import (
+	"database/sql"
 	"github.com/paula-michele-brisa/backend-campeonato/config/rest_err"
 	"github.com/paula-michele-brisa/backend-campeonato/service/team"
 )
@@ -24,4 +25,10 @@ func (team *teamRepository) UpdateTeam(id string, domainInterface team.TeamDomai
 
 func (team *teamRepository) DeleteTeam(string) *rest_err.RestErr {
 	return nil
+}
+
+func TeamRespository(database *sql.DB) TeamRepositoryInterface {
+	return &teamRepository{
+		database: database,
+	}
 }

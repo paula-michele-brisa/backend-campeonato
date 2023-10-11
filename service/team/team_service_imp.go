@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/paula-michele-brisa/backend-campeonato/config/logger"
 	"github.com/paula-michele-brisa/backend-campeonato/config/rest_err"
+	"github.com/paula-michele-brisa/backend-campeonato/repository/team"
 )
 
 func (t *teamDomainService) CreateTeamService(team TeamDomainServiceInterface) (TeamDomainServiceInterface, *rest_err.RestErr) {
@@ -26,3 +27,9 @@ func (team *teamDomainService) FindTeamsService(context *gin.Context) {}
 func (team *teamDomainService) FindTotalTeamsService(context *gin.Context) {}
 
 func (team *teamDomainService) UpdateTeamService(context *gin.Context) {}
+
+func TeamDomainService(teamRespository team.TeamRepositoryInterface) TeamDomainServiceInterface {
+	return &teamDomainService{
+		teamRespository: teamRespository,
+	}
+}
