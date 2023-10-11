@@ -3,7 +3,7 @@ package utils
 import (
 	"crypto/md5"
 	"encoding/hex"
-	"github.com/paula-michele-brisa/backend-campeonato/model/user"
+	"github.com/paula-michele-brisa/backend-campeonato/domain/user"
 )
 
 // EncryptPassword criptografa a senha do usuário

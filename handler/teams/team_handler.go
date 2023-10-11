@@ -1,8 +1,14 @@
 package teams
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/paula-michele-brisa/backend-campeonato/service/team"
+)
 
-func NewTeamHandlerInterface() {
+func NewTeamHandlerInterface(teamService team.TeamDomainServiceInterface) TeamHandlerInterface {
+	return &teamHandler{
+		teamService: teamService,
+	}
 
 }
 
@@ -15,5 +21,6 @@ type TeamHandlerInterface interface {
 	UpdateTeamHandler(context *gin.Context)
 }
 
-type teamHandlerInterface struct {
+type teamHandler struct {
+	teamService team.TeamDomainServiceInterface
 }

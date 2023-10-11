@@ -1,8 +1,8 @@
 package user
 
 import (
-	user2 "github.com/paula-michele-brisa/backend-campeonato/model/repository/entity/user"
-	"github.com/paula-michele-brisa/backend-campeonato/model/user"
+	"github.com/paula-michele-brisa/backend-campeonato/domain/user"
+	user2 "github.com/paula-michele-brisa/backend-campeonato/entity/user"
 )
 
 func ConvertDomainToEntity(userDomain user.UserDomainInterface) *user2.UserEntity {

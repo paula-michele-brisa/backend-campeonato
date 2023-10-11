@@ -16,6 +16,7 @@ func (team *teamDomain) SetID(id string) {
 func (team *teamDomain) GetName() string {
 	return team.Name
 }
+
 func (team *teamDomain) GetBadgePhoto() string {
 	return team.BadgePhoto
 }
