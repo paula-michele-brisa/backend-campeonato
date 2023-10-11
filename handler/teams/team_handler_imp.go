@@ -2,7 +2,6 @@ package teams
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/paula-michele-brisa/backend-campeonato/service/team"
 )
 
 // UpdateTeamHandler atualiza o time pelo id
@@ -51,9 +50,7 @@ func (team *teamHandler) FindTotalTeams(context *gin.Context) {
 	})
 }
 
-func TeamHandler(teamService team.TeamDomainServiceInterface) TeamHandlerInterface {
-	return &teamHandler{
-		teamService: teamService,
-	}
+func TeamHandler() TeamHandlerInterface {
+	return nil
 
 }
