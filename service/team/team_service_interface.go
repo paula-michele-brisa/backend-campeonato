@@ -12,4 +12,5 @@ type TeamServiceInterface interface {
 	UpdateTeam(id string, team team.TeamDomainInterface) (team.TeamDomainInterface, *rest_err.RestErr)
 	DeleteTeam(id string) *rest_err.RestErr
 	FindTotalRegisteredTeams() (int, *rest_err.RestErr)
+	FindTotalTeams() ([]team.TeamDomainInterface, *rest_err.RestErr)
 }

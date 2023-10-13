@@ -130,9 +130,15 @@ func (team *teamHandler) FindTeamByIDHandler(context *gin.Context) {
 
 // GetTeamsHandler retorna a lista de times cadastrados
 func (team *teamHandler) FindTeams(context *gin.Context) {
-	context.JSON(200, gin.H{
-		"time": "GPS futebol clube",
-	})
+
+	teamResponse, err := team.teamService.FindTotalTeams()
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, "Erro ao tentar obter times.")
+		return
+	}
+
+	context.JSON(http.StatusOK, teamResponse)
 
 }
 

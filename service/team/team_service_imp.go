@@ -26,8 +26,12 @@ func (t *teamService) DeleteTeam(id string) *rest_err.RestErr {
 	return nil
 }
 
-func (t *teamService) FindTotalTeamsRegister() (int, *rest_err.RestErr) {
+func (t *teamService) FindTotalRegisteredTeams() (int, *rest_err.RestErr) {
 	return 0, nil
+}
+
+func (t *teamService) FindTotalTeams() ([]team.TeamDomainInterface, *rest_err.RestErr) {
+	return nil, nil
 }
 
 func TeamService(repository team2.TeamRepositoryInterface) TeamServiceInterface {
