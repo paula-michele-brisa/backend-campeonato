@@ -1,9 +1,10 @@
 package login
 
 type loginDomain struct {
-	ID    string
-	Name  string
-	Email string
+	ID       string
+	Name     string
+	Email    string
+	Password string
 }
 
 func (login *loginDomain) GetID() string {
@@ -16,4 +17,8 @@ func (login *loginDomain) GetName() string {
 
 func (login *loginDomain) GetEmail() string {
 	return login.Email
+}
+
+func (user *loginDomain) SetPassword(password string) {
+	user.Password = password
 }
