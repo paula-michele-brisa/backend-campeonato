@@ -45,10 +45,25 @@ func (team *teamHandler) CreateTeamHandler(context *gin.Context) {
 
 	var teamRequest request.TeamRequest
 
+	var totalRegisteredTeams = 8
+
 	if err := context.ShouldBindJSON(teamRequest); err != nil {
 
 		context.JSON(http.StatusBadRequest, "Erro ao tentar criar dados do time")
 		return
+	}
+
+	totalTeams, err := team.teamService.FindTotalRegisteredTeams()
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, "Erro ao tentar atualizar time.")
+		return
+	}
+
+	if totalTeams > totalRegisteredTeams {
+		context.JSON(http.StatusBadRequest, "O limite total de cadastro de times foi atingido.")
+		return
+
 	}
 
 	teamDomain := team2.NewTeamDomain(
