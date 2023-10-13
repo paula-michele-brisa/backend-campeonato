@@ -1,9 +1,7 @@
 package login
 
 type LoginDomainInterface interface {
-	GetName()
-
-	GetEmail()
-
-	GetToken()
+	GetID() string
+	GetName() string
+	GetEmail() string
 }
