@@ -144,7 +144,13 @@ func (team *teamHandler) FindTeams(context *gin.Context) {
 
 // GetTotalRegisteredTeamsHandler obtem a quantidade total de times cadastrados
 func (team *teamHandler) FindTotalTeams(context *gin.Context) {
-	context.JSON(200, gin.H{
-		"total": "10",
-	})
+
+	totalTeams, err := team.teamService.FindTotalRegisteredTeams()
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, "Erro ao tentar obter total de times.")
+		return
+	}
+
+	context.JSON(http.StatusOK, totalTeams)
 }
