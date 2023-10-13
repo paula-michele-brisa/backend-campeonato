@@ -13,11 +13,11 @@ func (team *teamHandler) UpdateTeamHandler(context *gin.Context) {
 
 	var teamRequest request.TeamRequest
 
-	teamID := context.Param("userEmail")
+	teamID := context.Param("teamID")
 
 	if err := context.ShouldBindJSON(teamRequest); err != nil {
 
-		context.JSON(http.StatusBadRequest, "Erro ao tentar converter dados do time")
+		context.JSON(http.StatusBadRequest, "Erro ao tentar atualizar dados do time")
 		return
 	}
 
@@ -43,9 +43,30 @@ func (team *teamHandler) UpdateTeamHandler(context *gin.Context) {
 // CreateTeamHandler cadastra um novo time
 func (team *teamHandler) CreateTeamHandler(context *gin.Context) {
 
-	context.JSON(201, gin.H{
-		"message": "Time Cadastrado",
-	})
+	var teamRequest request.TeamRequest
+
+	if err := context.ShouldBindJSON(teamRequest); err != nil {
+
+		context.JSON(http.StatusBadRequest, "Erro ao tentar criar dados do time")
+		return
+	}
+
+	teamDomain := team2.NewTeamDomain(
+		teamRequest.Name,
+		teamRequest.Coach,
+		teamRequest.Website,
+		teamRequest.City,
+		teamRequest.BadgePhoto,
+	)
+
+	teamResponse, err := team.teamService.CreateTeam(teamDomain)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, "Erro ao tentar atualizar time.")
+		return
+	}
+
+	context.JSON(http.StatusOK, view.ConvertTeamDomainToResponse(teamResponse))
 }
 
 // DeleteTeamHandler remove o time
