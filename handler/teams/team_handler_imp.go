@@ -108,9 +108,24 @@ func (team *teamHandler) DeleteTeamHandler(context *gin.Context) {
 // GetTeamHandler obtém um time pelo id
 func (team *teamHandler) FindTeamByIDHandler(context *gin.Context) {
 
-	context.JSON(200, gin.H{
-		"total": "10",
-	})
+	var teamRequest request.TeamRequest
+
+	teamID := context.Param("teamID")
+
+	if err := context.ShouldBindJSON(teamRequest); err != nil {
+
+		context.JSON(http.StatusBadRequest, "Erro ao tentar obter time")
+		return
+	}
+
+	teamResponse, err := team.teamService.FindTeamByID(teamID)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, "Erro ao tentar obter time.")
+		return
+	}
+
+	context.JSON(http.StatusOK, view.ConvertTeamDomainToResponse(teamResponse))
 }
 
 // GetTeamsHandler retorna a lista de times cadastrados
