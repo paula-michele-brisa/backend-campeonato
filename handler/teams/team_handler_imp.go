@@ -2,14 +2,41 @@ package teams
 
 import (
 	"github.com/gin-gonic/gin"
-	team2 "github.com/paula-michele-brisa/backend-campeonato/service/team"
+	team2 "github.com/paula-michele-brisa/backend-campeonato/domain/team"
+	"github.com/paula-michele-brisa/backend-campeonato/handler/models/request"
+	"github.com/paula-michele-brisa/backend-campeonato/view"
+	"net/http"
 )
 
 // UpdateTeamHandler atualiza o time pelo id
 func (team *teamHandler) UpdateTeamHandler(context *gin.Context) {
-	context.JSON(400, gin.H{
-		"message": "Time atualizado",
-	})
+
+	var teamRequest request.TeamRequest
+
+	teamID := context.Param("userEmail")
+
+	if err := context.ShouldBindJSON(teamRequest); err != nil {
+
+		context.JSON(http.StatusBadRequest, "Erro ao tentar converter dados do time")
+		return
+	}
+
+	teamDomain := team2.NewTeamDomain(
+		teamRequest.Name,
+		teamRequest.Coach,
+		teamRequest.Website,
+		teamRequest.City,
+		teamRequest.BadgePhoto,
+	)
+
+	teamResponse, err := team.teamService.UpdateTeam(teamID, teamDomain)
+
+	if err != nil {
+		context.JSON(http.StatusBadRequest, "Erro ao tentar atualizar time.")
+		return
+	}
+
+	context.JSON(http.StatusOK, view.ConvertTeamDomainToResponse(teamResponse))
 
 }
 
@@ -49,11 +76,4 @@ func (team *teamHandler) FindTotalTeams(context *gin.Context) {
 	context.JSON(200, gin.H{
 		"total": "10",
 	})
-}
-
-func TeamHandler(teamService team2.TeamServiceInterface) TeamHandlerInterface {
-	return &teamHandler{
-		teamService,
-	}
-
 }

@@ -18,8 +18,8 @@ func (t *teamService) FindTeamByEmail(email string) (team.TeamDomainInterface, *
 	return nil, nil
 }
 
-func (t *teamService) UpdateTeam(id string, team team.TeamDomainInterface) *rest_err.RestErr {
-	return nil
+func (t *teamService) UpdateTeam(id string, team team.TeamDomainInterface) (team.TeamDomainInterface, *rest_err.RestErr) {
+	return nil, nil
 }
 
 func (t *teamService) DeleteTeam(id string) *rest_err.RestErr {
