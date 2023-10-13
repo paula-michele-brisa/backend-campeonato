@@ -71,9 +71,23 @@ func (team *teamHandler) CreateTeamHandler(context *gin.Context) {
 
 // DeleteTeamHandler remove o time
 func (team *teamHandler) DeleteTeamHandler(context *gin.Context) {
-	context.JSON(204, gin.H{
-		"message": "Time excluído",
-	})
+	var teamRequest request.TeamRequest
+
+	teamID := context.Param("teamID")
+
+	if err := context.ShouldBindJSON(teamRequest); err != nil {
+
+		context.JSON(http.StatusBadRequest, "Erro ao tentar deletar time")
+		return
+	}
+
+	if err := team.teamService.DeleteTeam(teamID); err != nil {
+		context.JSON(http.StatusBadRequest, "Erro ao tentar deletar time.")
+		return
+
+	}
+
+	context.JSON(http.StatusOK, "Time excluído com sucesso!")
 }
 
 // GetTeamHandler obtém um time pelo id
