@@ -24,6 +24,7 @@ func (login *loginHandler) LoginHandler(context *gin.Context) {
 	loginDomain := login2.NewLoginDomain(
 		loginRequest.Email,
 		loginRequest.Name,
+		loginRequest.Password,
 	)
 
 	loginUser, err := login.loginService.LoginService(loginDomain)
