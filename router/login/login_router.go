@@ -9,6 +9,6 @@ func LoginRouter(router *gin.RouterGroup, login login.LoginHandlerInterface) {
 
 	loginGroup := router.Group("/login")
 
-	loginGroup.GET("/", login.LoginHandler)
+	loginGroup.POST("/", login.LoginHandler)
 
 }

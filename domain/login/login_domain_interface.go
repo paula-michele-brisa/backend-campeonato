@@ -5,4 +5,6 @@ type LoginDomainInterface interface {
 	GetName() string
 	GetEmail() string
 	SetPassword(password string)
+	GetPassword() string
+	SetID(id string)
 }

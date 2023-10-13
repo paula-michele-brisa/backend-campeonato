@@ -19,6 +19,14 @@ func (login *loginDomain) GetEmail() string {
 	return login.Email
 }
 
-func (user *loginDomain) SetPassword(password string) {
-	user.Password = password
+func (login *loginDomain) GetPassword() string {
+	return login.Password
+}
+
+func (login *loginDomain) SetPassword(password string) {
+	login.Password = password
+}
+
+func (login *loginDomain) SetID(id string) {
+	login.ID = id
 }

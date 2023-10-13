@@ -1,6 +1,6 @@
 package login
 
-func NewLoginDomain(email, password, name string) LoginDomainInterface {
+func NewLoginDomain(email, name, password string) LoginDomainInterface {
 	return &loginDomain{
 		Email:    email,
 		Name:     name,

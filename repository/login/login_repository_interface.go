@@ -6,5 +6,5 @@ import (
 )
 
 type LoginRepositoryInterface interface {
-	LoginRepository(login login.LoginDomainInterface) (login.LoginDomainInterface, *rest_err.RestErr)
+	LoginRepository(email, password string) (login.LoginDomainInterface, *rest_err.RestErr)
 }
