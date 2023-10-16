@@ -20,7 +20,7 @@ func (login *loginRepository) LoginRepository(email, password string) (login.Log
 
 	if err != nil {
 		logger.Error("Ocorreu um erro ao tentar obter login no banco de dados", err)
-		return nil, nil
+		return nil, rest_err.NewInternalServerError(err.Error())
 	}
 
 	return user4.ConvertLoginEntityToDomain(*loginEntity), nil

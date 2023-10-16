@@ -35,7 +35,7 @@ func (user *userRespository) DeleteUser(id string) *rest_err.RestErr {
 
 	if err != nil {
 		logger.Error("Ocorreu um erro ao tentar cadastrar usuário no banco de dados", err)
-		return nil
+		return rest_err.NewInternalServerError(err.Error())
 	}
 
 	return nil
@@ -55,7 +55,7 @@ func (user *userRespository) FindUserByEmail(email string) (user.UserDomainInter
 
 	if err != nil {
 		logger.Error("Ocorreu um erro ao tentar obter usuário no banco de dados", err)
-		return nil, nil
+		return nil, rest_err.NewInternalServerError(err.Error())
 	}
 
 	return user4.ConvertEntityToDomain(*userEntity), nil
@@ -74,7 +74,7 @@ func (user *userRespository) FindUserByID(id string) (user.UserDomainInterface, 
 
 	if err != nil {
 		logger.Error("Ocorreu um erro ao tentar obter usuário no banco de dados", err)
-		return nil, nil
+		return nil, rest_err.NewInternalServerError(err.Error())
 	}
 
 	return user4.ConvertEntityToDomain(*userEntity), nil
@@ -91,7 +91,7 @@ func (user *userRespository) UpdateUser(id string, userDomain user.UserDomainInt
 
 	if err != nil {
 		logger.Error("Ocorreu um erro ao tentar obter usuário no banco de dados", err)
-		return nil
+		return rest_err.NewInternalServerError(err.Error())
 	}
 
 	return nil
