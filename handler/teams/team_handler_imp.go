@@ -18,9 +18,9 @@ func (team *teamHandler) UpdateTeamHandler(context *gin.Context) {
 
 	var teamRequest request.TeamRequest
 
-	teamID := context.Param("teamID")
+	teamID := context.Param("id")
 
-	if err := context.ShouldBindJSON(teamRequest); err != nil {
+	if err := context.ShouldBindJSON(&teamRequest); err != nil {
 
 		context.JSON(http.StatusBadRequest, "Erro ao tentar atualizar dados do time")
 		return
@@ -34,14 +34,14 @@ func (team *teamHandler) UpdateTeamHandler(context *gin.Context) {
 		teamRequest.BadgePhoto,
 	)
 
-	teamResponse, err := team.teamService.UpdateTeam(teamID, teamDomain)
+	err := team.teamService.UpdateTeam(teamID, teamDomain)
 
 	if err != nil {
 		context.JSON(http.StatusBadRequest, "Erro ao tentar atualizar time.")
 		return
 	}
 
-	context.JSON(http.StatusOK, view.ConvertTeamDomainToResponse(teamResponse))
+	context.JSON(http.StatusOK, "Time atualizado com sucesso!")
 
 }
 
@@ -91,15 +91,8 @@ func (team *teamHandler) CreateTeamHandler(context *gin.Context) {
 
 // DeleteTeamHandler remove o time
 func (team *teamHandler) DeleteTeamHandler(context *gin.Context) {
-	var teamRequest request.TeamRequest
 
-	teamID := context.Param("teamID")
-
-	if err := context.ShouldBindJSON(teamRequest); err != nil {
-
-		context.JSON(http.StatusBadRequest, "Erro ao tentar deletar time")
-		return
-	}
+	teamID := context.Param("id")
 
 	if err := team.teamService.DeleteTeam(teamID); err != nil {
 		context.JSON(http.StatusBadRequest, "Erro ao tentar deletar time.")

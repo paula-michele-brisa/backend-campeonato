@@ -51,11 +51,34 @@ func (t *teamRepository) FindTeamByID(id string) (team.TeamDomainInterface, *res
 	return team3.ConvertTeamEntityToDomain(*teamEntity), nil
 }
 
-func (t *teamRepository) UpdateTeam(id string, team team.TeamDomainInterface) (team.TeamDomainInterface, *rest_err.RestErr) {
-	return nil, nil
+func (t *teamRepository) UpdateTeam(id string, team team.TeamDomainInterface) *rest_err.RestErr {
+	db := t.databaseConnection
+
+	query := `UPDATE t_team SET name=$1, badgePhoto=$2, city=$3, coach=$4, website=$5 where id=$6 `
+
+	_, err := db.Exec(query, team.GetName(), team.GetBadgePhoto(), team.GetCity(), team.GetCoach(), team.GetWebSite(), id)
+
+	if err != nil {
+		logger.Error("Ocorreu um erro ao atualizar time no banco de dados", err)
+		return rest_err.NewInternalServerError(err.Error())
+	}
+	return nil
+
 }
 
 func (t *teamRepository) DeleteTeam(id string) *rest_err.RestErr {
+	db := t.databaseConnection
+
+	query := `DELETE FROM t_team where id=$1`
+
+	_, err := db.Exec(query, id)
+
+	if err != nil {
+		logger.Error("Ocorreu um erro ao Deletar time no banco de dados", err)
+
+		return rest_err.NewInternalServerError(err.Error())
+	}
+
 	return nil
 }
 

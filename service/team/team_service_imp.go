@@ -30,15 +30,15 @@ func (t *teamService) FindTeamByID(id string) (team.TeamDomainInterface, *rest_e
 	return teamDomain, nil
 }
 
-func (t *teamService) UpdateTeam(id string, team team.TeamDomainInterface) (team.TeamDomainInterface, *rest_err.RestErr) {
-	teamDomain, err := t.repository.UpdateTeam(id, team)
+func (t *teamService) UpdateTeam(id string, team team.TeamDomainInterface) *rest_err.RestErr {
+	err := t.repository.UpdateTeam(id, team)
 
 	if err != nil {
 		logger.Error("Erro ao tentar atualizar time", err)
-		return nil, err
+		return rest_err.NewInternalServerError(err.Error())
 	}
 
-	return teamDomain, nil
+	return nil
 }
 
 func (t *teamService) DeleteTeam(id string) *rest_err.RestErr {
