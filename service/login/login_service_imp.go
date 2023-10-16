@@ -11,13 +11,7 @@ func (loginService *loginService) LoginService(login login.LoginDomainInterface)
 
 	utils.EncryptPasswordLogin(login)
 
-	loginDomain, err := loginService.loginRepository.LoginRepository(login.GetEmail(), login.GetPassword())
-
-	if err != nil {
-		return nil, err
-	}
-
-	return loginDomain, nil
+	return loginService.loginRepository.LoginRepository(login.GetEmail(), login.GetPassword())
 
 }
 
