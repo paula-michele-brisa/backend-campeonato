@@ -66,17 +66,17 @@ func (t *teamRepository) FindTotalRegisteredTeams() (int, *rest_err.RestErr) {
 
 	var totalRegistro int
 
-	total, err := db.Query(query)
+	result, err := db.Query(query)
 
 	if err != nil {
 		logger.Error("Ocorreu um erro ao criar time no banco de dados", err)
 		return 0, rest_err.NewInternalServerError(err.Error())
 	}
 
-	for total.Next() {
+	for result.Next() {
 		var totalResult int
 
-		err = total.Scan(&totalResult)
+		err = result.Scan(&totalResult)
 
 		if err != nil {
 			break
@@ -90,5 +90,33 @@ func (t *teamRepository) FindTotalRegisteredTeams() (int, *rest_err.RestErr) {
 }
 
 func (t *teamRepository) FindTotalTeams() ([]team.TeamDomainInterface, *rest_err.RestErr) {
-	return nil, nil
+	db := t.databaseConnection
+
+	query := `SELECT * FROM t_team`
+
+	var teams []team.TeamDomainInterface
+
+	result, err := db.Query(query)
+
+	if err != nil {
+		logger.Error("Ocorreu um erro ao criar time no banco de dados", err)
+		return nil, rest_err.NewInternalServerError(err.Error())
+	}
+
+	for result.Next() {
+
+		var team team2.TeamEntity
+		err = result.Scan(&team.ID, &team.Name, &team.City, &team.Coach, &team.BadgePhoto, &team.Website)
+
+		if err != nil {
+			break
+		}
+
+		teamConvert := team3.ConvertTeamEntityToDomain(team)
+
+		teams = append(teams, teamConvert)
+	}
+
+	return teams, nil
+
 }
