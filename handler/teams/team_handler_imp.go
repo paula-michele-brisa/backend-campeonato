@@ -4,9 +4,14 @@ import (
 	"github.com/gin-gonic/gin"
 	team2 "github.com/paula-michele-brisa/backend-campeonato/domain/team"
 	"github.com/paula-michele-brisa/backend-campeonato/handler/models/request"
+	"github.com/paula-michele-brisa/backend-campeonato/service/team"
 	"github.com/paula-michele-brisa/backend-campeonato/view"
 	"net/http"
 )
+
+func NewTeamHandler(teamService team.TeamServiceInterface) TeamHandlerInterface {
+	return &teamHandler{teamService: teamService}
+}
 
 // UpdateTeamHandler atualiza o time pelo id
 func (team *teamHandler) UpdateTeamHandler(context *gin.Context) {
@@ -47,9 +52,9 @@ func (team *teamHandler) CreateTeamHandler(context *gin.Context) {
 
 	var totalRegisteredTeams = 8
 
-	if err := context.ShouldBindJSON(teamRequest); err != nil {
+	if err := context.ShouldBindJSON(&teamRequest); err != nil {
 
-		context.JSON(http.StatusBadRequest, "Erro ao tentar criar dados do time")
+		context.JSON(http.StatusBadRequest, "Erro ao tentar criar time")
 		return
 	}
 

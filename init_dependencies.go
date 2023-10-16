@@ -24,7 +24,7 @@ func initDependencies(database *sql.DB) user2.UserHandlerInterface {
 func initTeamDependencies(database *sql.DB) teams.TeamHandlerInterface {
 	teamRepository := team.TeamRepository(database)
 	teamService := team2.TeamService(teamRepository)
-	return teams.TeamHandler(teamService)
+	return teams.NewTeamHandler(teamService)
 
 }
 
