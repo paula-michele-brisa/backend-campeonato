@@ -5,6 +5,7 @@ import (
 	"github.com/paula-michele-brisa/backend-campeonato/config/logger"
 	"github.com/paula-michele-brisa/backend-campeonato/config/rest_err"
 	"github.com/paula-michele-brisa/backend-campeonato/domain/team"
+	team2 "github.com/paula-michele-brisa/backend-campeonato/entity/team"
 	team3 "github.com/paula-michele-brisa/backend-campeonato/repository/convert/team"
 )
 
@@ -27,14 +28,27 @@ func (t *teamRepository) CreateTeam(team team.TeamDomainInterface) (team.TeamDom
 
 	if err != nil {
 		logger.Error("Ocorreu um erro ao criar time no banco de dados", err)
-		return nil, nil
+		return nil, rest_err.NewInternalServerError(err.Error())
 	}
 
 	return team3.ConvertTeamEntityToDomain(*value), nil
 }
 
 func (t *teamRepository) FindTeamByID(id string) (team.TeamDomainInterface, *rest_err.RestErr) {
-	return nil, nil
+	db := t.databaseConnection
+
+	query := `SELECT * from t_team where id=$1`
+
+	teamEntity := &team2.TeamEntity{}
+
+	err := db.QueryRow(query, id).Scan(&teamEntity.ID, &teamEntity.Name, &teamEntity.City, &teamEntity.Coach, &teamEntity.Website, &teamEntity.BadgePhoto)
+
+	if err != nil {
+		logger.Error("Ocorreu um erro ao criar time no banco de dados", err)
+		return nil, rest_err.NewInternalServerError(err.Error())
+	}
+
+	return team3.ConvertTeamEntityToDomain(*teamEntity), nil
 }
 
 func (t *teamRepository) UpdateTeam(id string, team team.TeamDomainInterface) (team.TeamDomainInterface, *rest_err.RestErr) {
