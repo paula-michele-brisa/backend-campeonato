@@ -60,7 +60,33 @@ func (t *teamRepository) DeleteTeam(id string) *rest_err.RestErr {
 }
 
 func (t *teamRepository) FindTotalRegisteredTeams() (int, *rest_err.RestErr) {
-	return 0, nil
+	db := t.databaseConnection
+
+	query := `SELECT COUNT(*) FROM t_team`
+
+	var totalRegistro int
+
+	total, err := db.Query(query)
+
+	if err != nil {
+		logger.Error("Ocorreu um erro ao criar time no banco de dados", err)
+		return 0, rest_err.NewInternalServerError(err.Error())
+	}
+
+	for total.Next() {
+		var totalResult int
+
+		err = total.Scan(&totalResult)
+
+		if err != nil {
+			break
+		}
+
+		totalRegistro = totalResult
+
+	}
+
+	return totalRegistro, nil
 }
 
 func (t *teamRepository) FindTotalTeams() ([]team.TeamDomainInterface, *rest_err.RestErr) {

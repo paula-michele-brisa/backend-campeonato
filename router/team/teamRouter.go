@@ -10,7 +10,7 @@ func TeamRouter(router *gin.RouterGroup, team teams.TeamHandlerInterface) {
 	teamGroup := router.Group("/team")
 
 	// Obter o total de times cadastrados
-	teamGroup.GET("/team_count", team.FindTotalTeams)
+	teamGroup.GET("/teamCount", team.FindTotalTeams)
 
 	// Listar os times cadastrados
 	teamGroup.GET("/", team.FindTeams)
