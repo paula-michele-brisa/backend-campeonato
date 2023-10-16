@@ -21,10 +21,6 @@ func (t *teamRepository) FindTeamByID(id string) (team.TeamDomainInterface, *res
 	return nil, nil
 }
 
-func (t *teamRepository) FindTeamByEmail(email string) (team.TeamDomainInterface, *rest_err.RestErr) {
-	return nil, nil
-}
-
 func (t *teamRepository) UpdateTeam(id string, team team.TeamDomainInterface) (team.TeamDomainInterface, *rest_err.RestErr) {
 	return nil, nil
 }

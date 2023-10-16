@@ -10,8 +10,6 @@ type TeamRepositoryInterface interface {
 
 	FindTeamByID(id string) (team.TeamDomainInterface, *rest_err.RestErr)
 
-	FindTeamByEmail(email string) (team.TeamDomainInterface, *rest_err.RestErr)
-
 	UpdateTeam(id string, team team.TeamDomainInterface) (team.TeamDomainInterface, *rest_err.RestErr)
 	DeleteTeam(id string) *rest_err.RestErr
 
