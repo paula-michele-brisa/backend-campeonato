@@ -19,8 +19,8 @@ func (player *playerService) FindPlayers() ([]player.PlayerDomainInterface, *res
 
 func (player *playerService) FindTotalPlayer() (int32, *rest_err.RestErr) { return 0, nil }
 
-func (player *playerService) FindPlayerByID(id string) (int32, *rest_err.RestErr) {
-	return 0, nil
+func (player *playerService) FindPlayerByID(id string) (player.PlayerDomainInterface, *rest_err.RestErr) {
+	return nil, nil
 }
 
 func (player *playerService) UpdatePlayer(id string, playerDomain player.PlayerDomainInterface) *rest_err.RestErr {
