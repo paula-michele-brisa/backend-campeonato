@@ -10,4 +10,5 @@ type PlayerDomainInterface interface {
 	GetPosition() string
 	GetNumber() int32
 	GetTeamID() string
+	SetID(id string)
 }
