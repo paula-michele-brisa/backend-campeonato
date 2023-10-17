@@ -12,7 +12,7 @@ type PlayerRepositoryInterface interface {
 
 	FindTotalPlayer() (int32, *rest_err.RestErr)
 
-	FindPlayerByID(id string) (int32, *rest_err.RestErr)
+	FindPlayerByID(id string) (player.PlayerDomainInterface, *rest_err.RestErr)
 
 	UpdatePlayer(id string, playerDomain player.PlayerDomainInterface) *rest_err.RestErr
 
