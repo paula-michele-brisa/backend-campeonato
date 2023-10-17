@@ -5,22 +5,28 @@ import (
 	"github.com/paula-michele-brisa/backend-campeonato/domain/player"
 )
 
-func CreatePlayer(playerDomain player.PlayerDomainInterface) (player.PlayerDomainInterface, *rest_err.RestErr) {
+func NewPlayerService() PlayerServiceInterface {
+	return &playerService{}
+}
+
+func (player *playerService) CreatePlayer(playerDomain player.PlayerDomainInterface) (player.PlayerDomainInterface, *rest_err.RestErr) {
 	return nil, nil
 }
 
-func FindPlayers() ([]player.PlayerDomainInterface, *rest_err.RestErr) { return nil, nil }
+func (player *playerService) FindPlayers() ([]player.PlayerDomainInterface, *rest_err.RestErr) {
+	return nil, nil
+}
 
-func FindTotalPlayer() (int32, *rest_err.RestErr) { return 0, nil }
+func (player *playerService) FindTotalPlayer() (int32, *rest_err.RestErr) { return 0, nil }
 
-func FindPlayerByID(id string) (int32, *rest_err.RestErr) {
+func (player *playerService) FindPlayerByID(id string) (int32, *rest_err.RestErr) {
 	return 0, nil
 }
 
-func UpdatePlayer(id string, playerDomain player.PlayerDomainInterface) *rest_err.RestErr {
+func (player *playerService) UpdatePlayer(id string, playerDomain player.PlayerDomainInterface) *rest_err.RestErr {
 	return nil
 }
 
-func DeletePlayer(id string) *rest_err.RestErr {
+func (player *playerService) DeletePlayer(id string) *rest_err.RestErr {
 	return nil
 }
