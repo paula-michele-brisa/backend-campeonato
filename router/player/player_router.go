@@ -2,7 +2,7 @@ package player
 
 import (
 	"github.com/gin-gonic/gin"
-	"net/http"
+	"github.com/paula-michele-brisa/backend-campeonato/handler/player"
 )
 
 func PLayerRouter(router *gin.RouterGroup) {
@@ -10,34 +10,21 @@ func PLayerRouter(router *gin.RouterGroup) {
 	playerGroup := router.Group("/player")
 
 	// Listar jogadores cadastrados
-	playerGroup.GET("/", func(context *gin.Context) {
-		context.JSON(http.StatusOK, "Jogadores ok!")
-
-	})
+	playerGroup.GET("/", player.FindPlayers)
 
 	// Lista a quantidade de jogadores cadastrados
-	playerGroup.GET("/countPlayer", func(context *gin.Context) {
-
-	})
+	playerGroup.GET("/countPlayer", player.FindTotalPlayer)
 
 	// Cadastra um novo jogador
-	playerGroup.POST("/createPlayer", func(context *gin.Context) {
-
-	})
+	playerGroup.POST("/", player.CreatePlayer)
 
 	// Atualiza os dados do jogador
-	playerGroup.PUT("/:id", func(context *gin.Context) {
-
-	})
+	playerGroup.PUT("/:id", player.UpdatePlayer)
 
 	// Deleta jogador
-	playerGroup.DELETE("/:id", func(context *gin.Context) {
-
-	})
+	playerGroup.DELETE("/:id", player.DeletePlayer)
 
 	// Lista jogador pelo ID
-	playerGroup.GET("/:id", func(context *gin.Context) {
-
-	})
+	playerGroup.GET("/:id", player.FindPlayerByID)
 
 }
