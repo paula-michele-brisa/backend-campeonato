@@ -1,7 +1,7 @@
 package team
 
 type teamDomain struct {
-	ID         string
+	ID         string `sql:"id"`
 	Name       string
 	BadgePhoto string
 	City       string

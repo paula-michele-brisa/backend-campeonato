@@ -6,6 +6,7 @@ import (
 	"github.com/paula-michele-brisa/backend-campeonato/handler/teams"
 	user2 "github.com/paula-michele-brisa/backend-campeonato/handler/user"
 	login2 "github.com/paula-michele-brisa/backend-campeonato/router/login"
+	"github.com/paula-michele-brisa/backend-campeonato/router/player"
 	"github.com/paula-michele-brisa/backend-campeonato/router/team"
 	"github.com/paula-michele-brisa/backend-campeonato/router/user"
 )
@@ -18,5 +19,6 @@ func InitializeRouters(router *gin.Engine, userHandler user2.UserHandlerInterfac
 	login2.LoginRouter(v1, loginHandler)
 	user.UserRouters(v1, userHandler)
 	team.TeamRouter(v1, teamHandler)
+	player.PLayerRouter(v1)
 
 }
