@@ -7,6 +7,7 @@ import (
 
 func ConvertPlayerDomainToResponse(playerDomain player.PlayerDomainInterface) request.PlayerRequest {
 	return request.PlayerRequest{
+		Id:       playerDomain.GetID(),
 		Weight:   playerDomain.GetWeight(),
 		Name:     playerDomain.GetName(),
 		Height:   playerDomain.GetHeight(),

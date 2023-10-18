@@ -8,7 +8,7 @@ import (
 	player2 "github.com/paula-michele-brisa/backend-campeonato/repository/convert/player"
 )
 
-func NewPlayerRepository(database *sql.DB) PlayerRepositoryInterface {
+func PlayerRepository(database *sql.DB) PlayerRepositoryInterface {
 	return &playerRepository{database: database}
 }
 
@@ -20,7 +20,7 @@ func (player *playerRepository) CreatePlayer(playerDomain player.PlayerDomainInt
 	query := `INSERT INTO t_player(name, photo, height, weight, age, position, number, teamID)
 	VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id`
 
-	err := db.QueryRow(query, value.Name, value.Photo, value.Height, value.Weight, value.Age, value.Position, value.Position, value.Number, value.TeamID).Scan(&value.Id)
+	err := db.QueryRow(query, value.Name, value.Photo, value.Height, value.Weight, value.Age, value.Position, value.Number, value.TeamID).Scan(&value.Id)
 
 	if err != nil {
 		return nil, rest_err.NewInternalServerError(err.Error())
@@ -30,32 +30,34 @@ func (player *playerRepository) CreatePlayer(playerDomain player.PlayerDomainInt
 }
 
 func (player *playerRepository) FindPlayers() ([]player.PlayerDomainInterface, *rest_err.RestErr) {
-	db := player.database
+	//db := player.database
+	//
+	//var players []player.PlayerDomainInterface
+	//
+	//query := `SELECT * FROM t_player`
+	//
+	//rows, err := db.Query(query)
+	//
+	//if err != nil {
+	//	return nil, rest_err.NewInternalServerError(err.Error())
+	//}
+	//
+	//for rows.Next() {
+	//	var p player3.PlayerEntity
+	//
+	//	err := rows.Scan(&p.Age, &p.Name, &p.Height, &p.Id, &p.Position, &p.Weight, &p.Number, &p.TeamID, &p.Photo)
+	//
+	//	if err != nil {
+	//		break
+	//	}
+	//
+	//	players = append(players, p)
+	//
+	//}
+	//
+	//return players, nil
 
-	query := `SELECT * FROM t_player`
-
-	rows, err := db.Query(query)
-
-	if err != nil {
-		return nil, rest_err.NewInternalServerError(err.Error())
-	}
-
-	var players []player.PlayerDomainInterface
-
-	for rows.Next() {
-		var p player3.PlayerEntity
-
-		err := rows.Scan(&p.Age, &p.Name, &p.Height, &p.Id, &p.Position, &p.Weight, &p.Number, &p.TeamID, &p.Photo)
-
-		if err != nil {
-			break
-		}
-
-		players = append(players, p)
-
-	}
-
-	return players, nil
+	return nil, nil
 
 }
 
@@ -90,7 +92,20 @@ func (player *playerRepository) FindTotalPlayer() (int32, *rest_err.RestErr) {
 }
 
 func (player *playerRepository) FindPlayerByID(id string) (player.PlayerDomainInterface, *rest_err.RestErr) {
-	return nil, nil
+	db := player.database
+
+	query := `SELECT * FROM t_player WHERE id=$1`
+
+	playerEntity := &player3.PlayerEntity{}
+
+	err := db.QueryRow(query, id).Scan(&playerEntity.Id, &playerEntity.Name, &playerEntity.Photo, &playerEntity.Height,
+		&playerEntity.Weight, &playerEntity.Age, &playerEntity.Position, &playerEntity.Number, &playerEntity.TeamID)
+
+	if err != nil {
+		return nil, rest_err.NewInternalServerError(err.Error())
+	}
+
+	return player2.ConverPlayerEntityToDomain(*playerEntity), nil
 }
 
 func (player *playerRepository) UpdatePlayer(id string, playerDomain player.PlayerDomainInterface) *rest_err.RestErr {
@@ -98,5 +113,15 @@ func (player *playerRepository) UpdatePlayer(id string, playerDomain player.Play
 }
 
 func (player *playerRepository) DeletePlayer(id string) *rest_err.RestErr {
+	db := player.database
+
+	query := `DELETE FROM t_player WHERE id=$1`
+
+	_, err := db.Exec(query, id)
+
+	if err != nil {
+		return rest_err.NewInternalServerError(err.Error())
+	}
+
 	return nil
 }

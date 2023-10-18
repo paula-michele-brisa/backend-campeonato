@@ -9,12 +9,12 @@ func ConverPlayerEntityToDomain(playerEntity player2.PlayerEntity) player.Player
 
 	domain := player.NewPlayerDomain(
 		playerEntity.Name,
-		playerEntity.TeamID,
 		playerEntity.Photo,
 		playerEntity.Position,
-		playerEntity.Weight,
-		playerEntity.Age,
+		playerEntity.TeamID,
 		playerEntity.Number,
+		playerEntity.Age,
+		playerEntity.Weight,
 		playerEntity.Height,
 	)
 

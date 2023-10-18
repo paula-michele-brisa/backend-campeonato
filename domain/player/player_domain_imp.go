@@ -1,6 +1,6 @@
 package player
 
-func NewPlayerDomain(name, photo, position, teamID string, number, weight, age, height int32) PlayerDomainInterface {
+func NewPlayerDomain(name, photo, position, teamID string, number, age int32, weight float32, height float32) PlayerDomainInterface {
 	return &playerDomain{
 		name:     name,
 		position: position,

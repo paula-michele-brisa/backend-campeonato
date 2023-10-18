@@ -27,8 +27,8 @@ func (player *playerHandler) CreatePlayer(context *gin.Context) {
 		playerRequest.Position,
 		playerRequest.TeamID,
 		playerRequest.Number,
-		playerRequest.Weight,
 		playerRequest.Age,
+		playerRequest.Weight,
 		playerRequest.Height,
 	)
 
@@ -95,9 +95,9 @@ func (player *playerHandler) UpdatePlayer(context *gin.Context) {
 		playerRequest.Position,
 		playerRequest.TeamID,
 		playerRequest.Number,
-		playerRequest.Height,
-		playerRequest.Weight,
 		playerRequest.Age,
+		playerRequest.Weight,
+		playerRequest.Height,
 	)
 
 	err := player.playerService.UpdatePlayer(idPlayer, domain)

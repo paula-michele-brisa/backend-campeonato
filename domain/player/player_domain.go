@@ -4,8 +4,8 @@ type playerDomain struct {
 	id       string
 	name     string
 	photo    string
-	height   int32
-	weight   int32
+	height   float32
+	weight   float32
 	age      int32
 	position string
 	number   int32
@@ -24,11 +24,11 @@ func (player *playerDomain) GetPhoto() string {
 	return player.photo
 }
 
-func (player *playerDomain) GetHeight() int32 {
+func (player *playerDomain) GetHeight() float32 {
 	return player.height
 }
 
-func (player *playerDomain) GetWeight() int32 {
+func (player *playerDomain) GetWeight() float32 {
 	return player.weight
 }
 func (player *playerDomain) GetAge() int32 {

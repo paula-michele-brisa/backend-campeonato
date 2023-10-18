@@ -4,8 +4,8 @@ type PlayerDomainInterface interface {
 	GetID() string
 	GetName() string
 	GetPhoto() string
-	GetHeight() int32
-	GetWeight() int32
+	GetHeight() float32
+	GetWeight() float32
 	GetAge() int32
 	GetPosition() string
 	GetNumber() int32

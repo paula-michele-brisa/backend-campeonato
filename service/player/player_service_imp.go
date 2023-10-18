@@ -3,10 +3,11 @@ package player
 import (
 	"github.com/paula-michele-brisa/backend-campeonato/config/rest_err"
 	"github.com/paula-michele-brisa/backend-campeonato/domain/player"
+	player2 "github.com/paula-michele-brisa/backend-campeonato/repository/player"
 )
 
-func NewPlayerService() PlayerServiceInterface {
-	return &playerService{}
+func NewPlayerService(repository player2.PlayerRepositoryInterface) PlayerServiceInterface {
+	return &playerService{playerRepository: repository}
 }
 
 func (player *playerService) CreatePlayer(playerDomain player.PlayerDomainInterface) (player.PlayerDomainInterface, *rest_err.RestErr) {
