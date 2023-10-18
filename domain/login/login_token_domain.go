@@ -4,6 +4,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/paula-michele-brisa/backend-campeonato/config/rest_err"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -30,4 +31,40 @@ func (login *loginDomain) GenerateToken() (string, *rest_err.RestErr) {
 	}
 
 	return tokenString, nil
+}
+
+func VerifyToken(tokenValue string) (LoginDomainInterface, *rest_err.RestErr) {
+	secret := os.Getenv(JWT_SECRET_KEY)
+
+	token, err := jwt.Parse(RemoveBearerPrefix(tokenValue), func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); ok {
+			return []byte(secret), nil
+		}
+		return nil, rest_err.NewBadRequestError("Inválid token")
+	})
+
+	if err != nil {
+		return nil, rest_err.NewUnauthorizedRequestError("Invalid token")
+	}
+
+	claims, ok := token.Claims.(jwt.MapClaims)
+
+	if !ok || !token.Valid {
+		return nil, rest_err.NewUnauthorizedRequestError("Invalid token")
+	}
+
+	return &loginDomain{
+		ID:       claims["id"].(string),
+		Name:     claims["name"].(string),
+		Email:    claims["email"].(string),
+		Password: "",
+	}, nil
+}
+
+func RemoveBearerPrefix(token string) string {
+	if strings.HasPrefix(token, "Bearer") {
+		token = strings.TrimPrefix("Bearer", token)
+	}
+
+	return token
 }

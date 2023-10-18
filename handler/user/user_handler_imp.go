@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/paula-michele-brisa/backend-campeonato/config/logger"
 	"github.com/paula-michele-brisa/backend-campeonato/config/validation"
+	login2 "github.com/paula-michele-brisa/backend-campeonato/domain/login"
 	user2 "github.com/paula-michele-brisa/backend-campeonato/domain/user"
 	"github.com/paula-michele-brisa/backend-campeonato/handler/models/request"
 	"github.com/paula-michele-brisa/backend-campeonato/service/user"
@@ -87,6 +88,14 @@ func (userHandler *userHandlerInterface) DeleteUserHandler(context *gin.Context)
 // FindUserByIDHandler retorna os dados do usuário
 func (userHandler *userHandlerInterface) FindUserByIDHandler(context *gin.Context) {
 	logger.Info("Init findUserByID handler", zap.String("journey", "findUserID"))
+
+	_, err := login2.VerifyToken(context.Request.Header.Get("token"))
+
+	if err != nil {
+		context.JSON(err.Code, err)
+		return
+
+	}
 
 	userID := context.Param("userId")
 
