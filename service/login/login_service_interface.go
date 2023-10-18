@@ -6,5 +6,5 @@ import (
 )
 
 type LoginServiceInterface interface {
-	LoginService(login login.LoginDomainInterface) (login.LoginDomainInterface, *rest_err.RestErr)
+	LoginService(login login.LoginDomainInterface) (login.LoginDomainInterface, string, *rest_err.RestErr)
 }

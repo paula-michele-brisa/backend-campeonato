@@ -7,11 +7,26 @@ import (
 	"github.com/paula-michele-brisa/backend-campeonato/utils"
 )
 
-func (loginService *loginService) LoginService(login login.LoginDomainInterface) (login.LoginDomainInterface, *rest_err.RestErr) {
+func (loginService *loginService) LoginService(login login.LoginDomainInterface) (login.LoginDomainInterface, string, *rest_err.RestErr) {
 
 	utils.EncryptPasswordLogin(login)
 
-	return loginService.loginRepository.LoginRepository(login.GetEmail(), login.GetPassword())
+	user, err := loginService.loginRepository.LoginRepository(login.GetEmail(), login.GetPassword())
+
+	if err != nil {
+		return nil, "", err
+	}
+
+	token, err := user.GenerateToken()
+
+	if err != nil {
+
+		return nil, "", err
+	}
+
+	println(token)
+
+	return user, token, nil
 
 }
 

@@ -28,13 +28,15 @@ func (loginHandler *loginHandler) LoginHandler(context *gin.Context) {
 		loginRequest.Password,
 	)
 
-	loginUser, err := loginHandler.loginService.LoginService(loginDomain)
+	loginUser, token, err := loginHandler.loginService.LoginService(loginDomain)
 
 	if err != nil {
 		logger.Error("Erro trying to call LoginUser services", err)
 		context.JSON(err.Code, err)
 		return
 	}
+
+	context.Header("token", token)
 
 	context.JSON(http.StatusOK, view.ConverteToLoginDomainResponse(loginUser))
 
