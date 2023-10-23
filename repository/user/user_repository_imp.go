@@ -2,11 +2,14 @@ package user
 
 import (
 	"database/sql"
+	"fmt"
 	"github.com/paula-michele-brisa/backend-campeonato/config/logger"
 	"github.com/paula-michele-brisa/backend-campeonato/config/rest_err"
 	"github.com/paula-michele-brisa/backend-campeonato/domain/user"
 	user3 "github.com/paula-michele-brisa/backend-campeonato/entity/user"
 	user4 "github.com/paula-michele-brisa/backend-campeonato/repository/convert/user"
+	"strconv"
+	"strings"
 )
 
 func (user *userRespository) CreateUser(userDomain user.UserDomainInterface) (user.UserDomainInterface, *rest_err.RestErr) {
@@ -84,10 +87,9 @@ func (user *userRespository) UpdateUser(id string, userDomain user.UserDomainInt
 	logger.Info("Init UpdateUser repository")
 
 	db := user.databaseConnection
+	consulta, valores := gerarConsultaAtualizacao(userDomain, id)
 
-	query := `UPDATE  t_user SET name=$1, email=$2 WHERE id=$3`
-
-	_, err := db.Exec(query, userDomain.GetName(), userDomain.GetEmail(), id)
+	_, err := db.Exec(consulta, valores...)
 
 	if err != nil {
 		logger.Error("Ocorreu um erro ao tentar obter usuário no banco de dados", err)
@@ -95,6 +97,34 @@ func (user *userRespository) UpdateUser(id string, userDomain user.UserDomainInt
 	}
 
 	return nil
+}
+
+func gerarConsultaAtualizacao(user user.UserDomainInterface, idUser string) (string, []interface{}) {
+	var filtros = map[string]string{
+		"name":  user.GetName(),
+		"email": user.GetEmail(),
+	}
+
+	campos := make([]string, 0)
+	valores := make([]interface{}, 0)
+
+	for filtro, valor := range filtros {
+		if valor != "" {
+			campos = append(campos, filtro+" = $"+strconv.Itoa(len(valores)+1))
+			valores = append(valores, valor)
+		}
+	}
+
+	consulta := fmt.Sprintf("UPDATE t_user SET %s WHERE id = $%d", strings.Join(campos, ", "), len(valores)+1)
+
+	// Converta o idUser de string para int32 e adicione à lista de valores.
+	id, err := strconv.ParseInt(idUser, 10, 32)
+	if err != nil {
+		// Lide com o erro da conversão de string para int32 aqui
+	}
+	valores = append(valores, int32(id))
+
+	return consulta, valores
 }
 
 func NewUserRespository(database *sql.DB) UserRepository {
